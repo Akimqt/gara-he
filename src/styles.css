@@ -1,0 +1,464 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* GARA-HE POS design system
+   Palette grounded in the physical menu: paper cream, espresso ink,
+   burnt terracotta accent, moka steel chrome, gold star, rust for
+   destructive/sold-out, sage for success.
+
+   Polish pass: richer OKLCH values (a touch deeper & warmer), layered
+   tactile shadows, multi-stage choreographed keyframes with
+   anticipation → action → settle, GPU-only (transform/opacity), and
+   context-specific animation "signatures". */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-paper: var(--paper);
+  --color-espresso: var(--espresso);
+  --color-terracotta: var(--terracotta);
+  --color-moka: var(--moka);
+  --color-gold: var(--gold);
+  --color-rust: var(--rust);
+  --color-sage: var(--sage);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-chart-1: var(--terracotta);
+  --color-chart-2: var(--sage);
+  --color-chart-3: var(--gold);
+  --color-chart-4: var(--moka);
+  --color-chart-5: var(--espresso);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Refined palette — slightly deeper terracotta, warmer paper highlight,
+     more saturated gold; keeps existing hues so nothing looks "new". */
+  --paper: oklch(0.965 0.020 84);
+  --espresso: oklch(0.225 0.032 54);
+  --terracotta: oklch(0.585 0.158 44);
+  --moka: oklch(0.500 0.024 68);
+  --gold: oklch(0.745 0.145 82);
+  --rust: oklch(0.515 0.178 32);
+  --sage: oklch(0.560 0.062 132);
+
+  --background: var(--paper);
+  --foreground: var(--espresso);
+  --card: oklch(0.988 0.012 84);
+  --card-foreground: var(--espresso);
+  --popover: oklch(0.988 0.012 84);
+  --popover-foreground: var(--espresso);
+  --primary: var(--terracotta);
+  --primary-foreground: oklch(0.988 0.012 84);
+  --secondary: oklch(0.908 0.022 74);
+  --secondary-foreground: var(--espresso);
+  --muted: oklch(0.928 0.016 78);
+  --muted-foreground: var(--moka);
+  --accent: oklch(0.908 0.028 64);
+  --accent-foreground: var(--espresso);
+  --destructive: var(--rust);
+  --destructive-foreground: oklch(0.988 0.012 84);
+  --border: oklch(0.855 0.022 74);
+  --input: oklch(0.895 0.020 74);
+  --ring: var(--terracotta);
+
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--espresso);
+  --sidebar-primary: var(--terracotta);
+  --sidebar-primary-foreground: oklch(0.988 0.012 84);
+  --sidebar-accent: oklch(0.908 0.022 74);
+  --sidebar-accent-foreground: var(--espresso);
+  --sidebar-border: oklch(0.855 0.022 74);
+  --sidebar-ring: var(--terracotta);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+    /* Two-layer dot grid — the second, larger grid creates a subtle
+       parallax texture that reads as physical paper. */
+    background-image:
+      radial-gradient(oklch(0.500 0.024 68 / 0.06) 1px, transparent 1px),
+      radial-gradient(oklch(0.500 0.024 68 / 0.04) 1px, transparent 1px),
+      radial-gradient(1200px 600px at 10% -10%, oklch(0.745 0.145 82 / 0.06), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, oklch(0.585 0.158 44 / 0.05), transparent 60%);
+    background-size: 22px 22px, 40px 40px, auto, auto;
+    background-position: 0 0, 11px 11px, 0 0, 0 0;
+    background-attachment: fixed, fixed, fixed, fixed;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  h1 { font-weight: 700; }
+  h2 { font-weight: 600; }
+
+  /* Smoother focus ring transition on all interactive elements. */
+  button, [role="button"], a, input, textarea, select {
+    transition-property: transform, box-shadow, background-color, border-color, color, opacity, filter;
+    transition-duration: 180ms;
+    transition-timing-function: cubic-bezier(0.34, 1.35, 0.5, 1);
+  }
+
+  /* Tabular numerics for any element containing prices/counts. */
+  .num, [data-num] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@utility num {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+@utility dotted-frame {
+  border: 1.5px dotted var(--color-moka);
+  border-radius: var(--radius-2xl);
+}
+
+@utility receipt-perf {
+  background-image: radial-gradient(circle, var(--color-moka) 1px, transparent 1.2px);
+  background-size: 10px 2px;
+  background-repeat: repeat-x;
+  background-position: center;
+  height: 2px;
+}
+
+@utility soldout-diag {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    oklch(0.515 0.178 32 / 0.08) 10px 20px
+  );
+}
+
+/* -------- Warm, tactile shadows (layered like paper on wood) -------- */
+@utility shadow-warm {
+  box-shadow:
+    0 1px 0 oklch(0.225 0.032 54 / 0.04),
+    0 2px 4px -2px oklch(0.585 0.158 44 / 0.12),
+    0 10px 22px -12px oklch(0.500 0.024 68 / 0.32),
+    inset 0 1px 0 oklch(1 0 0 / 0.35);
+}
+@utility shadow-warm-lg {
+  box-shadow:
+    0 2px 0 oklch(0.225 0.032 54 / 0.05),
+    0 8px 18px -8px oklch(0.585 0.158 44 / 0.22),
+    0 26px 48px -20px oklch(0.500 0.024 68 / 0.38),
+    inset 0 1px 0 oklch(1 0 0 / 0.4);
+}
+@utility shadow-warm-hover {
+  box-shadow:
+    0 2px 0 oklch(0.225 0.032 54 / 0.05),
+    0 10px 22px -8px oklch(0.585 0.158 44 / 0.26),
+    0 24px 40px -16px oklch(0.500 0.024 68 / 0.36),
+    inset 0 1px 0 oklch(1 0 0 / 0.45);
+}
+@utility shadow-inset-soft {
+  box-shadow:
+    inset 0 1px 2px oklch(0.225 0.032 54 / 0.08),
+    inset 0 0 0 1px oklch(0.500 0.024 68 / 0.06);
+}
+
+/* -------- Keyframes: multi-stage, choreographed, GPU-only -------- */
+
+/* Menu-card add: anticipation compress → overshoot pop → settle wobble,
+   layered with a tiny rotational tilt correction. */
+@keyframes pop-in {
+  0%   { transform: scale(0.86) rotate(-2deg); opacity: 0; }
+  35%  { transform: scale(1.06) rotate(1.2deg); opacity: 1; }
+  65%  { transform: scale(0.985) rotate(-0.4deg); }
+  85%  { transform: scale(1.008) rotate(0.15deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* Press feedback — with a whisper of anticipation and a tiny settle. */
+@keyframes card-press {
+  0%   { transform: scale(1); }
+  18%  { transform: scale(1.015); }   /* anticipation */
+  45%  { transform: scale(0.955); }   /* action */
+  75%  { transform: scale(1.012); }   /* overshoot */
+  100% { transform: scale(1); }       /* settle */
+}
+
+@keyframes ripple {
+  0%   { transform: scale(0);   opacity: 0.55; }
+  60%  { opacity: 0.28; }
+  100% { transform: scale(2.6); opacity: 0;    }
+}
+
+@keyframes tick-in {
+  0%   { transform: translateY(-45%) scale(0.9); opacity: 0; }
+  60%  { transform: translateY(6%) scale(1.08); opacity: 1; }
+  100% { transform: translateY(0)    scale(1); opacity: 1; }
+}
+
+@keyframes sparkle-shimmer {
+  0%   { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+  25%  { opacity: 0.95; }
+  100% { transform: translateX(220%)  skewX(-18deg); opacity: 0; }
+}
+
+@keyframes steam-rise {
+  0%   { transform: translateY(0)    scale(1) translateX(0); opacity: 0; }
+  25%  { opacity: 0.6; }
+  60%  { transform: translateY(-8px) scale(1.08) translateX(1px); opacity: 0.45; }
+  100% { transform: translateY(-18px) scale(1.22) translateX(-1px); opacity: 0; }
+}
+
+/* Happy pot: anticipation dip → hop with squash → settle wobble.
+   Uses scaleX/scaleY variations for squash-and-stretch charm. */
+@keyframes pot-bounce {
+  0%   { transform: translateY(0)    scaleX(1)    scaleY(1)    rotate(0deg); }
+  12%  { transform: translateY(2px)  scaleX(1.06) scaleY(0.94) rotate(0deg); }  /* squash / anticipation */
+  32%  { transform: translateY(-9px) scaleX(0.94) scaleY(1.08) rotate(-4deg); } /* stretch up */
+  50%  { transform: translateY(0)    scaleX(1.04) scaleY(0.96) rotate(3deg); }  /* land squash */
+  68%  { transform: translateY(-3px) scaleX(0.98) scaleY(1.02) rotate(-1.5deg); }
+  85%  { transform: translateY(0)    scaleX(1.01) scaleY(0.99) rotate(0.5deg); }
+  100% { transform: translateY(0)    scaleX(1)    scaleY(1)    rotate(0deg); }
+}
+
+@keyframes success-sweep {
+  0%   { transform: translateX(-110%) skewX(-14deg); opacity: 0; }
+  30%  { opacity: 0.85; }
+  100% { transform: translateX(115%)  skewX(-14deg); opacity: 0; }
+}
+
+/* Destructive: quick shake of hesitation, then fold/tear/collapse. */
+@keyframes tear-off {
+  0%   { transform: translateX(0) translateY(0) rotate(0) scaleY(1); opacity: 1; }
+  10%  { transform: translateX(-2px) rotate(-0.6deg); }
+  20%  { transform: translateX(2px)  rotate(0.6deg); }
+  30%  { transform: translateX(-1px) rotate(-0.3deg); }
+  55%  { transform: translateY(6px)  rotate(1.5deg) scaleY(0.94); opacity: 0.55; }
+  100% { transform: translateY(48px) rotate(3deg)   scaleY(0.82); opacity: 0; }
+}
+
+@keyframes slide-in-down {
+  0%   { transform: translateY(-10px) scale(0.97); opacity: 0; }
+  55%  { transform: translateY(3px)   scale(1.008); opacity: 1; }
+  80%  { transform: translateY(-1px)  scale(0.998); }
+  100% { transform: translateY(0)     scale(1); opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  0%   { transform: translateY(8px); opacity: 0; }
+  60%  { transform: translateY(-1px); opacity: 1; }
+  100% { transform: translateY(0);   opacity: 1; }
+}
+
+/* Route / view transition — soft directional glide with a whisper of scale. */
+@keyframes view-enter {
+  0%   { transform: translateY(8px) scale(0.995); opacity: 0; filter: blur(2px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* Modal / popover backdrop — gradual blur, not a snap. */
+@keyframes backdrop-in {
+  0%   { opacity: 0; backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); }
+  100% { opacity: 1; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+}
+
+/* Ambient soft glow pulse for totals / focal numbers. */
+@keyframes glow-pulse {
+  0%   { box-shadow: 0 0 0 0 oklch(0.745 0.145 82 / 0);   transform: scale(1); }
+  35%  { box-shadow: 0 0 0 8px oklch(0.745 0.145 82 / 0.18); transform: scale(1.015); }
+  100% { box-shadow: 0 0 0 16px oklch(0.745 0.145 82 / 0); transform: scale(1); }
+}
+
+/* Small sparkle particle (ambient accent under the mascot's happy bounce). */
+@keyframes sparkle-pop {
+  0%   { transform: scale(0) rotate(0deg);   opacity: 0; }
+  40%  { transform: scale(1.2) rotate(90deg); opacity: 1; }
+  100% { transform: scale(0) rotate(180deg); opacity: 0; }
+}
+
+/* Ghost fly-to-cart connective motion. */
+@keyframes fly-to-cart {
+  0%   { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
+  30%  { transform: translate(var(--fly-mx, 40px), var(--fly-my, -20px)) scale(0.9) rotate(-6deg); opacity: 0.95; }
+  100% { transform: translate(var(--fly-x, 200px), var(--fly-y, -120px)) scale(0.35) rotate(-14deg); opacity: 0; }
+}
+
+/* Springy easing shared across the app */
+@utility ease-spring {
+  transition-timing-function: cubic-bezier(0.34, 1.35, 0.5, 1);
+}
+@utility ease-out-soft {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* -------- Animation utilities -------- */
+@utility animate-pop {
+  animation: pop-in 280ms cubic-bezier(0.34, 1.35, 0.5, 1);
+  will-change: transform, opacity;
+}
+@utility animate-card-press {
+  animation: card-press 260ms cubic-bezier(0.34, 1.35, 0.5, 1);
+  will-change: transform;
+}
+@utility animate-ripple {
+  animation: ripple 520ms ease-out forwards;
+  will-change: transform, opacity;
+}
+@utility animate-tick {
+  animation: tick-in 260ms cubic-bezier(0.34, 1.35, 0.5, 1);
+}
+@utility animate-shimmer-once {
+  animation: sparkle-shimmer 900ms cubic-bezier(0.22, 1, 0.36, 1) 200ms 1 both;
+}
+@utility animate-steam {
+  animation: steam-rise 2600ms ease-out infinite;
+  will-change: transform, opacity;
+}
+@utility animate-pot-happy {
+  animation: pot-bounce 780ms cubic-bezier(0.34, 1.35, 0.5, 1);
+  transform-origin: 60% 100%;
+  will-change: transform;
+}
+@utility animate-success-sweep {
+  animation: success-sweep 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@utility animate-tear-off {
+  animation: tear-off 460ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  will-change: transform, opacity;
+}
+@utility animate-line-in {
+  animation: slide-in-down 320ms cubic-bezier(0.34, 1.35, 0.5, 1);
+  will-change: transform, opacity;
+}
+@utility animate-fade-up {
+  animation: fade-in-up 300ms cubic-bezier(0.34, 1.35, 0.5, 1);
+}
+@utility animate-view-enter {
+  animation: view-enter 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity, filter;
+}
+@utility animate-backdrop-in {
+  animation: backdrop-in 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@utility animate-glow-pulse {
+  animation: glow-pulse 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@utility animate-sparkle-pop {
+  animation: sparkle-pop 720ms cubic-bezier(0.34, 1.35, 0.5, 1) forwards;
+}
+@utility animate-fly-to-cart {
+  animation: fly-to-cart 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* -------- Stagger helpers for cascading list entrances --------
+   Apply `stagger-children` to a container; children get
+   incremental animation-delays (~40ms each) up to 12 items. */
+@utility stagger-children {
+  & > * { animation-delay: 0ms; }
+  & > *:nth-child(2)  { animation-delay: 40ms; }
+  & > *:nth-child(3)  { animation-delay: 80ms; }
+  & > *:nth-child(4)  { animation-delay: 120ms; }
+  & > *:nth-child(5)  { animation-delay: 160ms; }
+  & > *:nth-child(6)  { animation-delay: 200ms; }
+  & > *:nth-child(7)  { animation-delay: 240ms; }
+  & > *:nth-child(8)  { animation-delay: 280ms; }
+  & > *:nth-child(9)  { animation-delay: 320ms; }
+  & > *:nth-child(10) { animation-delay: 360ms; }
+  & > *:nth-child(11) { animation-delay: 400ms; }
+  & > *:nth-child(n+12) { animation-delay: 440ms; }
+}
+
+/* -------- Interactive helpers -------- */
+@utility press {
+  transition: transform 140ms cubic-bezier(0.34, 1.35, 0.5, 1),
+              filter 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  &:hover { filter: brightness(1.03) saturate(1.02); }
+  &:active { transform: scale(0.955); }
+}
+
+@utility lift-on-hover {
+  transition: transform 220ms cubic-bezier(0.34, 1.35, 0.5, 1),
+              box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  &:hover { transform: translateY(-2px); }
+  &:active { transform: translateY(0) scale(0.99); }
+}
+
+/* -------- Sparkle glyph background (reusable star burst) -------- */
+@utility sparkle-mask {
+  background: radial-gradient(circle, var(--color-gold) 0 30%, transparent 32%);
+}
+
+/* Respect reduced motion — universal fallback for every keyframe above. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  body {
+    background-attachment: scroll, scroll, scroll, scroll;
+  }
+}
+
+/* Hide scrollbar for horizontal tab strips on mobile */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
