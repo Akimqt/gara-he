@@ -158,7 +158,7 @@ export function CashReconciliation({
               onChange={(e) => setExpAmount(sanitizeAmountInput(e.target.value))}
               onKeyDown={(e) => e.key === "Enter" && submitExpense()}
               placeholder="Amount"
-              className="num w-24 rounded-xl border border-moka/40 bg-paper px-3 py-2 text-right text-sm font-bold text-espresso focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
+              className="num min-w-0 w-20 shrink rounded-xl border border-moka/40 bg-paper px-2.5 py-2 text-right text-sm font-bold text-espresso focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
             />
             <button
               onClick={submitExpense}
