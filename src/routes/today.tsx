@@ -150,7 +150,7 @@ export function CashReconciliation({
               value={expLabel}
               onChange={(e) => setExpLabel(e.target.value)}
               placeholder="Label (optional)"
-              className="h-11 min-w-0 flex-1 rounded-xl border border-moka/40 bg-paper px-3 text-sm text-espresso focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
+              className="min-w-0 flex-1 rounded-xl border border-moka/40 bg-paper px-3 py-2 text-sm text-espresso focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
             />
             <input
               inputMode="decimal"
@@ -158,11 +158,11 @@ export function CashReconciliation({
               onChange={(e) => setExpAmount(sanitizeAmountInput(e.target.value))}
               onKeyDown={(e) => e.key === "Enter" && submitExpense()}
               placeholder="Amount"
-              className="num h-11 w-20 min-w-0 shrink rounded-xl border border-moka/40 bg-paper px-2.5 text-right text-sm font-bold text-espresso focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
+              className="num min-w-0 w-20 shrink rounded-xl border border-moka/40 bg-paper px-2.5 py-2 text-right text-sm font-bold text-espresso focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
             />
             <button
               onClick={submitExpense}
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-terracotta text-primary-foreground transition-all ease-spring hover:brightness-110 active:scale-90"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-terracotta text-primary-foreground shadow-warm transition-all ease-spring hover:brightness-110 active:scale-90"
               aria-label="Add expense"
             >
               <Plus className="h-4 w-4" />

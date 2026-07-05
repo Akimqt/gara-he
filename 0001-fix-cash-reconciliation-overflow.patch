@@ -1,0 +1,102 @@
+From a9c9bf458548df8331c691ad0fe479f093a97840 Mon Sep 17 00:00:00 2001
+From: Akim <karlakimdinglasan@gmail.com>
+Date: Sun, 5 Jul 2026 03:35:08 +0000
+Subject: [PATCH] Fix cash reconciliation card overflowing off-screen on mobile
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The dotted-frame card (Petty Cash / Expenses / Sales Today) used a bare
+'grid' with no explicit column track on mobile. Without grid-cols-1,
+the browser sizes the implicit column using CSS Grid's default 'auto'
+track algorithm, which bases its minimum on the content's min-content
+width instead of 0 — the classic grid 'blowout' bug. That let the card
+(and the add-expense '+' button) grow past the viewport width and get
+clipped off the right edge, exactly as seen in the screenshot.
+
+Fix: give every stacked grid a base grid-cols-1 (compiles to
+repeat(1, minmax(0, 1fr)), which correctly caps the track), add
+min-w-0 to the grid's direct children so nested flex/truncate children
+can still shrink, and let the expense-label span truncate instead of
+pushing its row wider. Also add overflow-hidden on the outer card as a
+defensive backstop. Applied the same grid-cols-1 fix to the matching
+stat-card grids on the History page.
+---
+ src/routes/history.tsx |  4 ++--
+ src/routes/today.tsx   | 14 +++++++-------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/src/routes/history.tsx b/src/routes/history.tsx
+index fab89c8..418a27f 100644
+--- a/src/routes/history.tsx
++++ b/src/routes/history.tsx
+@@ -151,11 +151,11 @@ function HistoryPage() {
+         <div>
+           {selected ? (
+             <>
+-              <div className="mb-3 grid gap-3 sm:mb-4 sm:grid-cols-2">
++              <div className="mb-3 grid grid-cols-1 gap-3 sm:mb-4 sm:grid-cols-2">
+                 <StatCard label={dayLabel(selected)} value={pesoDec(selectedRevenue)} icon={TrendingUp} accent />
+                 <StatCard label="Transactions" value={String(selectedSales.length)} icon={Receipt} />
+               </div>
+-              <div className="mb-3 grid gap-3 sm:mb-4 sm:grid-cols-2">
++              <div className="mb-3 grid grid-cols-1 gap-3 sm:mb-4 sm:grid-cols-2">
+                 <StatCard label="Cash" value={pesoDec(selectedCash)} />
+                 <StatCard label="GCash" value={pesoDec(selectedGcash)} />
+               </div>
+diff --git a/src/routes/today.tsx b/src/routes/today.tsx
+index e5de26d..847fe4c 100644
+--- a/src/routes/today.tsx
++++ b/src/routes/today.tsx
+@@ -45,12 +45,12 @@ function TodayPage() {
+         </Link>
+       </div>
+ 
+-      <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
++      <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
+         <StatCard label="Revenue" value={pesoDec(revenue)} icon={TrendingUp} accent />
+         <StatCard label="Transactions" value={String(count)} icon={Receipt} />
+       </div>
+ 
+-      <div className="mt-3 grid gap-3 sm:mt-4 sm:gap-4 md:grid-cols-2">
++      <div className="mt-3 grid grid-cols-1 gap-3 sm:mt-4 sm:gap-4 md:grid-cols-2">
+         <StatCard label="Cash" value={pesoDec(cashRevenue)} icon={Banknote} />
+         <StatCard label="GCash" value={pesoDec(gcashRevenue)} icon={Smartphone} />
+       </div>
+@@ -121,9 +121,9 @@ export function CashReconciliation({
+   }
+ 
+   return (
+-    <div className="dotted-frame grid gap-5 bg-card p-5 lg:grid-cols-2">
++    <div className="dotted-frame grid grid-cols-1 gap-5 overflow-hidden bg-card p-5 lg:grid-cols-2">
+       {/* Left: inputs — petty cash + expenses */}
+-      <div className="space-y-4">
++      <div className="min-w-0 space-y-4">
+         <div>
+           <label className="block text-[11px] uppercase tracking-wider text-moka">
+             Petty Cash (starting float)
+@@ -176,10 +176,10 @@ export function CashReconciliation({
+                   key={e.id}
+                   className="flex items-center justify-between rounded-lg border border-moka/20 bg-paper/60 px-3 py-1.5 text-sm"
+                 >
+-                  <span className="truncate text-espresso">
++                  <span className="min-w-0 truncate text-espresso">
+                     {e.label || "Expense"}
+                   </span>
+-                  <div className="flex items-center gap-2">
++                  <div className="flex shrink-0 items-center gap-2">
+                     <span className="num font-semibold text-espresso">{peso(e.amount)}</span>
+                     <button
+                       onClick={() => removeExpense(e.id)}
+@@ -199,7 +199,7 @@ export function CashReconciliation({
+       </div>
+ 
+       {/* Right: computed summary, mirrors the paper tally */}
+-      <div className="space-y-1.5 rounded-2xl border border-moka/20 bg-paper/50 p-4 text-sm">
++      <div className="min-w-0 space-y-1.5 rounded-2xl border border-moka/20 bg-paper/50 p-4 text-sm">
+         <p className="mb-1 px-1 text-[10px] font-semibold uppercase tracking-wider text-moka/70">
+           Sales Today
+         </p>
+-- 
+2.43.0
+
