@@ -45,12 +45,12 @@ function TodayPage() {
         </Link>
       </div>
 
-      <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
         <StatCard label="Revenue" value={pesoDec(revenue)} icon={TrendingUp} accent />
         <StatCard label="Transactions" value={String(count)} icon={Receipt} />
       </div>
 
-      <div className="mt-3 grid gap-3 sm:mt-4 sm:gap-4 md:grid-cols-2">
+      <div className="mt-3 grid grid-cols-1 gap-3 sm:mt-4 sm:gap-4 md:grid-cols-2">
         <StatCard label="Cash" value={pesoDec(cashRevenue)} icon={Banknote} />
         <StatCard label="GCash" value={pesoDec(gcashRevenue)} icon={Smartphone} />
       </div>
@@ -121,9 +121,9 @@ export function CashReconciliation({
   }
 
   return (
-    <div className="dotted-frame grid gap-5 bg-card p-5 lg:grid-cols-2">
+    <div className="dotted-frame grid grid-cols-1 gap-5 overflow-hidden bg-card p-5 lg:grid-cols-2">
       {/* Left: inputs — petty cash + expenses */}
-      <div className="space-y-4">
+      <div className="min-w-0 space-y-4">
         <div>
           <label className="block text-[11px] uppercase tracking-wider text-moka">
             Petty Cash (starting float)
@@ -176,10 +176,10 @@ export function CashReconciliation({
                   key={e.id}
                   className="flex items-center justify-between rounded-lg border border-moka/20 bg-paper/60 px-3 py-1.5 text-sm"
                 >
-                  <span className="truncate text-espresso">
+                  <span className="min-w-0 truncate text-espresso">
                     {e.label || "Expense"}
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex shrink-0 items-center gap-2">
                     <span className="num font-semibold text-espresso">{peso(e.amount)}</span>
                     <button
                       onClick={() => removeExpense(e.id)}
@@ -199,7 +199,7 @@ export function CashReconciliation({
       </div>
 
       {/* Right: computed summary, mirrors the paper tally */}
-      <div className="space-y-1.5 rounded-2xl border border-moka/20 bg-paper/50 p-4 text-sm">
+      <div className="min-w-0 space-y-1.5 rounded-2xl border border-moka/20 bg-paper/50 p-4 text-sm">
         <p className="mb-1 px-1 text-[10px] font-semibold uppercase tracking-wider text-moka/70">
           Sales Today
         </p>

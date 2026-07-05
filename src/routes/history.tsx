@@ -151,11 +151,11 @@ function HistoryPage() {
         <div>
           {selected ? (
             <>
-              <div className="mb-3 grid gap-3 sm:mb-4 sm:grid-cols-2">
+              <div className="mb-3 grid grid-cols-1 gap-3 sm:mb-4 sm:grid-cols-2">
                 <StatCard label={dayLabel(selected)} value={pesoDec(selectedRevenue)} icon={TrendingUp} accent />
                 <StatCard label="Transactions" value={String(selectedSales.length)} icon={Receipt} />
               </div>
-              <div className="mb-3 grid gap-3 sm:mb-4 sm:grid-cols-2">
+              <div className="mb-3 grid grid-cols-1 gap-3 sm:mb-4 sm:grid-cols-2">
                 <StatCard label="Cash" value={pesoDec(selectedCash)} />
                 <StatCard label="GCash" value={pesoDec(selectedGcash)} />
               </div>
