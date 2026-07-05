@@ -162,7 +162,7 @@ export function CashReconciliation({
             />
             <button
               onClick={submitExpense}
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-terracotta text-primary-foreground shadow-warm transition-all ease-spring hover:brightness-110 active:scale-90"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-terracotta text-primary-foreground transition-all ease-spring hover:brightness-110 active:scale-90"
               aria-label="Add expense"
             >
               <Plus className="h-4 w-4" />
