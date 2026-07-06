@@ -337,7 +337,6 @@ export function useDailyLedger(day: string, sales: Sale[] = []) {
 
   const exists = Object.prototype.hasOwnProperty.call(all, day);
   const ledger = all[day] ?? DEFAULT_LEDGER;
-  const carriedRef = useRef(false);
 
   const persistDay = useCallback(
     (targetDay: string, nextLedger: DailyLedger) => {
@@ -346,31 +345,9 @@ export function useDailyLedger(day: string, sales: Sale[] = []) {
     [],
   );
 
-  // If today doesn't have a ledger yet, seed its starting float with
-  // yesterday's (or the most recent prior day's) ending cash instead of
-  // ₱0, so the cashier doesn't have to remember and retype it every
-  // morning. This only fires once per mount and never overwrites a
-  // ledger that already exists for `day`.
-  useEffect(() => {
-    if (exists || carriedRef.current) return;
-    const priorDayKeys = new Set<string>(Object.keys(all).filter((k) => k < day));
-    sales.forEach((s) => {
-      const k = dayKey(s.timestamp);
-      if (k < day) priorDayKeys.add(k);
-    });
-    if (priorDayKeys.size === 0) return;
-    const prevDay = Array.from(priorDayKeys).sort().pop()!;
-    const prevLedger = all[prevDay] ?? DEFAULT_LEDGER;
-    const prevCashSales = sales
-      .filter((s) => dayKey(s.timestamp) === prevDay && s.paymentMethod === "cash")
-      .reduce((sum, s) => sum + s.total, 0);
-    const prevExpenses = prevLedger.expenses.reduce((sum, e) => sum + e.amount, 0);
-    const endingCash = Math.max(0, prevLedger.pettyCash + prevCashSales - prevExpenses);
-    carriedRef.current = true;
-    const next: DailyLedger = { ...(all[day] ?? DEFAULT_LEDGER), pettyCash: endingCash };
-    queryClient.setQueryData(["ledgers"], { ...all, [day]: next });
-    persistDay(day, next);
-  }, [exists, all, sales, day, queryClient, persistDay]);
+  // Petty cash is set manually by the cashier only — no auto-carry-over
+  // from the previous day's ending cash. A new day simply starts at the
+  // DEFAULT_LEDGER (₱0) until the cashier types in the starting float.
 
   const setPettyCash = useCallback(
     (amount: number) => {
