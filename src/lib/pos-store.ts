@@ -347,7 +347,7 @@ export function useDailyLedger(day: string, sales: Sale[] = []) {
 
   // Petty cash is set manually by the cashier only — no auto-carry-over
   // from the previous day's ending cash. A new day simply starts at the
-  // DEFAULT_LEDGER (₱0) until the cashier types in the starting float.
+  // DEFAULT_LEDGER (₱0) until the cashier types in the petty cash amount.
 
   const setPettyCash = useCallback(
     (amount: number) => {

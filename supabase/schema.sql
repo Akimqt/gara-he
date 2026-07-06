@@ -54,7 +54,7 @@ values (1, 10)
 on conflict (id) do nothing;
 
 -- ---------------------------------------------------------------------
--- ledgers (one row per day: petty cash float + expenses for that day)
+-- ledgers (one row per day: petty cash + expenses for that day)
 -- ---------------------------------------------------------------------
 create table if not exists ledgers (
   day text primary key,                      -- 'YYYY-MM-DD'

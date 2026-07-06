@@ -126,7 +126,7 @@ export function CashReconciliation({
       <div className="min-w-0 space-y-4">
         <div>
           <label className="block text-[11px] uppercase tracking-wider text-moka">
-            Petty Cash (starting float)
+            Petty Cash
           </label>
           <input
             inputMode="decimal"
@@ -137,7 +137,7 @@ export function CashReconciliation({
             className="num mt-1 w-full rounded-xl border border-moka/40 bg-paper px-3 py-2.5 text-lg font-bold text-espresso transition-colors focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/40"
           />
           <p className="mt-1 text-[11px] text-moka">
-            Enter today's starting cash float manually.
+            Enter today's petty cash manually.
           </p>
         </div>
 
@@ -215,7 +215,7 @@ export function CashReconciliation({
         <p className="mb-1 px-1 text-[10px] font-semibold uppercase tracking-wider text-moka/70">
           Cash Drawer
         </p>
-        <SummaryRow label="Starting Float" value={peso(ledger.pettyCash)} />
+        <SummaryRow label="Petty Cash" value={peso(ledger.pettyCash)} />
         <SummaryRow label="Cash Sales" operator="+" value={peso(cashSales)} />
         <SummaryRow label="Total Cash on Hand" value={peso(totalCashOnHand)} bold />
         <SummaryRow label="Expenses" operator="−" value={peso(totalExpenses)} className="text-rust" />
