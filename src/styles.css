@@ -71,7 +71,7 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.9rem;
 
   /* Refined palette — slightly deeper terracotta, warmer paper highlight,
      more saturated gold; keeps existing hues so nothing looks "new". */
@@ -336,6 +336,27 @@
   0%   { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
   30%  { transform: translate(var(--fly-mx, 40px), var(--fly-my, -20px)) scale(0.9) rotate(-6deg); opacity: 0.95; }
   100% { transform: translate(var(--fly-x, 200px), var(--fly-y, -120px)) scale(0.35) rotate(-14deg); opacity: 0; }
+}
+
+/* Cute little hover wiggle — a tiny side-to-side rock, not a full spin. */
+@keyframes cute-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-2.2deg); }
+  75%      { transform: rotate(2.2deg); }
+}
+@utility animate-wiggle-hover {
+  &:hover { animation: cute-wiggle 420ms ease-in-out; }
+}
+
+/* Gentle heartbeat pulse for cute accent badges (best-seller star, hearts). */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25%      { transform: scale(1.14); }
+  40%      { transform: scale(0.98); }
+  55%      { transform: scale(1.08); }
+}
+@utility animate-heartbeat {
+  animation: heartbeat 1400ms ease-in-out infinite;
 }
 
 /* Springy easing shared across the app */

@@ -391,7 +391,7 @@ function ItemCard({
       className={cn(
         "group relative flex min-h-32 flex-col justify-between gap-2 overflow-hidden rounded-2xl border border-moka/20 bg-card p-2.5 text-left shadow-warm transition-all duration-200 ease-spring focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta sm:p-3",
         item.available
-          ? "hover:-translate-y-0.5 hover:border-terracotta/60 hover:shadow-warm-hover active:scale-[0.97]"
+          ? "hover:-translate-y-0.5 hover:border-terracotta/60 hover:shadow-warm-hover active:scale-[0.97] animate-wiggle-hover"
           : "soldout-diag cursor-not-allowed opacity-60",
         flash && "animate-card-press",
       )}
@@ -408,7 +408,7 @@ function ItemCard({
 
       {item.bestSeller && (
         <span className="absolute right-2 top-2 flex items-center gap-1 overflow-hidden rounded-full bg-gold/95 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-espresso shadow">
-          <Star className="h-3 w-3 fill-espresso" strokeWidth={0} />
+          <Star className="h-3 w-3 animate-heartbeat fill-espresso" strokeWidth={0} />
           Best
           {/* one-time shimmer sweep on first render */}
           <span
@@ -647,7 +647,7 @@ function OrderPanel(props: {
               animated={!chargeSuccess}
               happy={chargeSuccess}
             />
-            <p className="mt-3 font-display text-lg">Ready for the next order</p>
+            <p className="mt-3 font-display text-lg">Ready for the next order ♡</p>
             <p className="mt-1 text-xs">Tap an item to begin</p>
           </div>
         ) : (

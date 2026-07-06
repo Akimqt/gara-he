@@ -40,6 +40,17 @@ export function MokaPot({
       {/* Base */}
       <path d="M36 132 L84 132 L80 140 L40 140 Z" />
 
+      {/* Cute face — closed, happy ^‿^ eyes and soft blush, drawn on the
+          top chamber. Kept subtle (thin stroke, low-opacity blush) so it
+          reads as charming rather than cartoonish at small sizes. */}
+      <g strokeWidth="2.4">
+        <path d="M46 46 Q49 42 52 46" />
+        <path d="M68 46 Q71 42 74 46" />
+      </g>
+      <circle cx="43" cy="53" r="3.4" fill="currentColor" stroke="none" opacity=".22" />
+      <circle cx="77" cy="53" r="3.4" fill="currentColor" stroke="none" opacity=".22" />
+      <path d="M55 55 Q60 59 65 55" strokeWidth="2.2" />
+
       {/* Steam — primary wisps */}
       <g className={animated || happy ? "animate-steam" : ""} style={{ transformOrigin: "60px 4px" }}>
         <path d="M52 4 C 48 -2, 56 -6, 52 -12" opacity=".55" />
@@ -85,6 +96,14 @@ export function MokaPot({
           </g>
           <g className="animate-sparkle-pop" style={{ transformOrigin: "110px 108px", animationDelay: "80ms" }}>
             <circle cx="110" cy="108" r="1.8" fill="currentColor" stroke="none" opacity=".55" />
+          </g>
+          <g className="animate-sparkle-pop text-terracotta" style={{ transformOrigin: "60px -6px", animationDelay: "180ms" }}>
+            <path
+              d="M60 -1 C 57 -5, 51 -4, 51 -0.5 C 51 2.5, 55.5 5.5, 60 8.5 C 64.5 5.5, 69 2.5, 69 -0.5 C 69 -4, 63 -5, 60 -1 Z"
+              fill="currentColor"
+              stroke="none"
+              opacity=".8"
+            />
           </g>
         </>
       )}
